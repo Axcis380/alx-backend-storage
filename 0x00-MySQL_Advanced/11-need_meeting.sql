@@ -1,5 +1,4 @@
--- creates a view need_meeting that lists all students
--- that have a score under 80 (strict) and no last_meeting or more than 1 month
+-- Create view need_meeting for students with score < 80 and no last_meeting or last_meeting > 1 month ago
 DROP VIEW IF EXISTS need_meeting;
 CREATE VIEW need_meeting
 AS SELECT name FROM students
