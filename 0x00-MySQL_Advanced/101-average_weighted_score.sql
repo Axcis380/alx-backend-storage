@@ -1,5 +1,4 @@
--- Task 13 - Average weighted score for all! -  computes and store the average weighted score for all students.
--- Procedure ComputeAverageWeightedScoreForUsers is not taking any input.
+-- Task 13: Create a procedure named "ComputeAverageWeightedScoreForUsers" to compute and store the average weighted score for all students without taking any input
 DROP PROCEDURE IF EXISTS ComputeAverageWeightedScoreForUsers;
 DELIMITER $$
 CREATE PROCEDURE ComputeAverageWeightedScoreForUsers()
