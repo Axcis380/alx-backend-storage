@@ -1,5 +1,4 @@
--- Task 6: Add bonus - creates a stored procedure AddBonus
--- that adds a new correction for a student
+-- Task 6: Create a stored procedure named "AddBonus" to add a new correction for a student
 DELIMITER |
 CREATE PROCEDURE AddBonus (
     IN user_id int,

@@ -1,6 +1,4 @@
-  
--- Task 5: Email validation to sent - creates a trigger that resets the attribute valid_email
--- only when the email has been changed
+-- Task 5: Create a trigger that resets the "valid_email" attribute only when the email has been changed
 DELIMITER |
 CREATE TRIGGER email_bool BEFORE UPDATE ON users
 FOR EACH ROW
