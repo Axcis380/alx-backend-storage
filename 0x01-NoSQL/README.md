@@ -1,1 +1,1 @@
-# `NoSQL`
+#NO-SQL
