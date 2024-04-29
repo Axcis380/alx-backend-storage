@@ -1,4 +1,4 @@
-// Delete by match
+// Dlt match
 db.school.deleteMany(
     { name: "Holberton school" }
 )
