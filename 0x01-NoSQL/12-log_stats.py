@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""log stats from collection
+"""Collecting statistics from a collection of logs
 """
 from pymongo import MongoClient
 
@@ -8,7 +8,7 @@ METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 
 
 def log_stats(mongo_collection, option=None):
-    """ script that provides some stats about Nginx logs stored in MongoDB
+    """ Script providing statistics about Nginx logs stored in MongoDB
     """
     items = {}
     if option:
