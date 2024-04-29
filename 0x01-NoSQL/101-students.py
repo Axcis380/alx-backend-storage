@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-""" MongoDB Operations with Python using pymongo """
+""" Executing MongoDB Operations in Python with pymongo """
 
 
 def top_students(mongo_collection):
-    """ Returns all students sorted by average score """
+    """ Retrieve all students sorted by average score """
 
     top_st = mongo_collection.aggregate([
         {
