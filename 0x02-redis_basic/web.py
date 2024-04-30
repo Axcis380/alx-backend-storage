@@ -1,36 +1,43 @@
 #!/usr/bin/env python3
-"""
-Implements an expiring web cache and tracker
-"""
-from typing import Callable
-from functools import wraps
-import redis
+
 import requests
-redis_client = redis.Redis()
+import time
+from functools import wraps
 
+CACHE = {}
 
-def url_count(method: Callable) -> Callable:
-    """
-    counts how many times an url is accessed
-    """
-    @wraps(method)
-    def wrapper(*args, **kwargs):
-        url = args[0]
-        redis_client.incr(f"count:{url}")
-        cached = redis_client.get(f'{url}')
-        if cached:
-            return cached.decode('utf-8')
-        redis_client.setex(f'{url}, 10, {method(url)}')
-        return method(*args, **kwargs)
+def track_access_count(func):
+    @wraps(func)
+    def wrapper(url):
+        count_key = f"count:{url}"
+        if count_key in CACHE:
+            CACHE[count_key] += 1
+        else:
+            CACHE[count_key] = 1
+        return func(url)
     return wrapper
 
+def cache_result(func):
+    @wraps(func)
+    def wrapper(url):
+        if url in CACHE and time.time() - CACHE[url]['timestamp'] < 10:
+            return CACHE[url]['content']
+        else:
+            content = func(url)
+            CACHE[url] = {'content': content, 'timestamp': time.time()}
+            return content
+    return wrapper
 
-@url_count
-def get_page(url: str) -> str:
-    """get a page and cache value"""
+@track_access_count
+@cache_result
+def get_page(url):
     response = requests.get(url)
     return response.text
 
-
+# Exemple d'utilisation
 if __name__ == "__main__":
-    get_page('http://slowwly.robertomurray.co.uk')
+    url = "http://slowwly.robertomurray.co.uk/delay/10000/url/http://www.example.com"
+    print(get_page(url))
+    print(get_page(url))
+    print(get_page(url))
+    print(f"Nombre d'accès pour {url}: {CACHE.get('count:' + url, 0)}")
