@@ -10,7 +10,9 @@ redis_client = redis.Redis()
 
 
 def url_count(method: Callable) -> Callable:
-    """counts how many times an url is accessed"""
+    """
+    counts how many times an url is accessed
+    """
     @wraps(method)
     def wrapper(*args, **kwargs):
         url = args[0]
