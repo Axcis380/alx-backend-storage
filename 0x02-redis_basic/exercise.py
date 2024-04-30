@@ -92,8 +92,8 @@ str: string
 
     def get(self, key: str, fn: Callable = None)\
             -> Union[str, bytes, int, float]:
-        """Redis data convert it to its Python type
-        """
+        """ Redis data convert it to its Python type """
+                
         data = self._redis.get(key)
         if fn:
             return fn(data)
