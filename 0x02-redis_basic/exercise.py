@@ -80,14 +80,14 @@ class Cache():
     @count_calls
     @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
-        """Method stores:
-
-Args:
-data (Union[str, bytes, int, float]): Data to store
-
-Returns:
-str: string
-        """
+    """Store method
+  
+          Args:
+              data (Union[str, bytes, int, float]): Data to be stored
+  
+          Returns:
+              str: string
+    """
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
