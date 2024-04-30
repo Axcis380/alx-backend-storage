@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Python-Redis exercise"""
+"""Redis and Python exercise"""
 import uuid
 from functools import wraps
 from typing import Callable, Union
@@ -8,25 +8,25 @@ import redis
 
 
 def count_calls(method: Callable) -> Callable:
-    """Decorator: one method Callable in, one Callable out
-    """
+    """decorator that takes a single method Callable argument
+    and returns a Callable"""
     key = method.__qualname__
 
     @wraps(method)
     def wrapper(self, *args, **kwargs):
-        """Increases the key count with each method call and returns the original method's value
-        """
+        """increments the count for that key every time the method
+        is called and returns the value returned by the original method """
         self._redis.incr(key)
         return method(self, *args, **kwargs)
     return wrapper
 
 
 def call_history(method: Callable) -> Callable:
-    """Stores input-output history for a function
+    """stores the history of inputs and outputs for a particular function
     """
     @wraps(method)
     def wrapper(self, *args, **kwargs):
-        """Persists function input-output to Redis
+        """saves the input and output of each function in redis
         """
         input_key = method.__qualname__ + ":inputs"
         output_key = method.__qualname__ + ":outputs"
@@ -42,7 +42,7 @@ def call_history(method: Callable) -> Callable:
 
 
 def replay(fn: Callable):
-     """Display the history of calls of a particular function"""
+    """Display the history of calls of a particular function"""
     r = redis.Redis()
     f_name = fn.__qualname__
     n_calls = r.get(f_name)
@@ -107,7 +107,7 @@ class Cache():
         """ Transform a redis type variable to a str python type """
         variable = self._redis.get(key)
         try:
-            etdedariable = int(variable.decode("UTF-8"))
+            variable = int(variable.decode("UTF-8"))
         except Exception:
             variable = 0
         return variable
