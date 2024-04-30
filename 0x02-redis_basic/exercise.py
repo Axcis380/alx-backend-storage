@@ -42,7 +42,9 @@ def call_history(method: Callable) -> Callable:
 
 
 def replay(fn: Callable):
-    """ Display the history of calls of a particular function """
+    """ Display the history of calls and their corresponding 
+    inputs and outputs for a particular function
+ """
     r = redis.Redis()
     f_name = fn.__qualname__
     n_calls = r.get(f_name)
